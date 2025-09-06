@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dB ⇄ Voltage Converter</title>
+    <title>dBm ⇄ Watt Converter</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#8b5cf6">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="dB Converter">
+    <meta name="apple-mobile-web-app-title" content="dBm Converter">
     <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -18,7 +18,7 @@
         }
         .focus-ring:focus {
             outline: none;
-            box-shadow: 0 0 0 2px #3b82f6;
+            box-shadow: 0 0 0 2px #8b5cf6;
             border-color: transparent;
         }
         .transition-all {
@@ -53,7 +53,7 @@
                         />
                         <button
                             id="copy-db-btn"
-                            class="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-blue-500 transition-colors duration-200 hidden"
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-purple-500 transition-colors duration-200 hidden"
                         >
                             <i data-lucide="copy" class="w-5 h-5"></i>
                         </button>
@@ -83,7 +83,7 @@
                         />
                         <button
                             id="copy-voltage-btn"
-                            class="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-blue-500 transition-colors duration-200 hidden"
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-purple-500 transition-colors duration-200 hidden"
                         >
                             <i data-lucide="copy" class="w-5 h-5"></i>
                         </button>

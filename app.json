@@ -4,10 +4,10 @@
     "slug": "dbm-power-converter",
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon_with_frame.png",
+    "icon": "./assets/dBmWicon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/icon_with_frame.png",
+      "image": "./assets/dBmWicon.png",
       "resizeMode": "contain",
       "backgroundColor": "#f9fafb"
     },
@@ -23,7 +23,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon_with_frame.png",
+        "foregroundImage": "./assets/dBmWicon.png",
         "backgroundColor": "#f9fafb"
       },
       "package": "com.antimatterwebcomics.dbmwattconverter"
@@ -31,7 +31,7 @@
     "plugins": [],
     "extra": {
       "eas": {
-        "projectId": "6e098ade-1496-462e-ba19-c246f2850985"
+        "projectId": "6e619a3d-5fca-457c-9c03-634bb7eb0a2f"
       }
     }
   }

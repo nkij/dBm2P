@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#3b82f6',
+    color: '#8b5cf6',
     textAlign: 'center',
   },
   card: {

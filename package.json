@@ -1,7 +1,7 @@
 {
-  "name": "db-voltage-converter",
-  "version": "1.0.0",
-  "description": "Convert between decibels and voltage ratios with step-by-step math explanations",
+  "name": "dbm-power-converter",
+  "version": "1.0.1",
+  "description": "Convert between dBm and power (watts) with step-by-step math explanations",
   "main": "App.js",
   "scripts": {
     "build": "echo 'Build complete'",
@@ -18,12 +18,13 @@
     "ios": "expo run:ios"
   },
   "keywords": [
-    "decibel",
-    "voltage",
-    "converter",
-    "audio",
+    "dbm",
+    "power",
+    "watts",
+    "rf",
     "electronics",
-    "calculator"
+    "calculator",
+    "converter"
   ],
   "author": "Your Name",
   "license": "MIT",
