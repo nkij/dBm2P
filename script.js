@@ -17,89 +17,89 @@ document.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
 
     // State variables
-    let dbValue = '';
-    let voltageRatio = '';
+    let dbmValue = '';
+    let powerValue = '';
     let lastModified = null;
     let copyFeedback = '';
 
     // DOM elements
-    const dbInput = document.getElementById('db-input');
-    const voltageInput = document.getElementById('voltage-input');
-    const copyDbBtn = document.getElementById('copy-db-btn');
-    const copyVoltageBtn = document.getElementById('copy-voltage-btn');
+    const dbmInput = document.getElementById('dbm-input');
+    const powerInput = document.getElementById('power-input');
+    const copyDbmBtn = document.getElementById('copy-dbm-btn');
+    const copyPowerBtn = document.getElementById('copy-power-btn');
     const clearBtn = document.getElementById('clear-btn');
     const copyFeedbackDiv = document.getElementById('copy-feedback');
     const feedbackText = document.getElementById('feedback-text');
     const mathExplanation = document.getElementById('math-explanation');
     const mathContent = document.getElementById('math-content');
 
-    // Convert dB to voltage ratio: V2/V1 = 10^(dB/20)
-    function dbToVoltageRatio(db) {
-        return Math.pow(10, db / 20);
+    // Convert dBm to power: Power (W) = 10^((dBm - 30) / 10)
+    function dbmToPower(dbm) {
+        return Math.pow(10, (dbm - 30) / 10);
     }
 
-    // Convert voltage ratio to dB: dB = 20 * log10(V2/V1)
-    function voltageRatioToDb(ratio) {
-        return 20 * Math.log10(ratio);
+    // Convert power to dBm: dBm = 10 * log10(Power) + 30
+    function powerToDbm(power) {
+        return 10 * Math.log10(power) + 30;
     }
 
-    function showMathExplanation(fromDb, value, result) {
+    function showMathExplanation(fromDbm, value, result) {
         mathExplanation.classList.remove('hidden');
         
-        if (fromDb) {
-            // Show dB to ratio calculation
-            const db = Number(value);
-            const ratio = result;
-            const exponent = db / 20;
+        if (fromDbm) {
+            // Show dBm to power calculation
+            const dbm = Number(value);
+            const power = result;
+            const exponent = (dbm - 30) / 10;
             
             mathContent.innerHTML = `
                 <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
-                    <p class="font-medium text-blue-900 mb-2">Converting ${db} dB to Voltage Ratio:</p>
+                    <p class="font-medium text-blue-900 mb-2">Converting ${dbm} dBm to Watt:</p>
                     <div class="space-y-2 text-blue-800">
                         <div class="flex items-center space-x-2">
                             <span class="font-mono">Formula:</span>
-                            <code class="bg-blue-100 px-2 py-1 rounded">V₂/V₁ = 10^(dB/20)</code>
+                            <code class="bg-blue-100 px-2 py-1 rounded">Power (W) = 10^((dBm - 30) / 10)</code>
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="font-mono">Step 1:</span>
-                            <span>Calculate exponent: ${db} ÷ 20 = ${exponent.toFixed(3)}</span>
+                            <span>Calculate exponent: (${dbm} - 30) ÷ 10 = ${exponent.toFixed(3)}</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="font-mono">Step 2:</span>
-                            <span>10^${exponent.toFixed(3)} = ${ratio.toFixed(6)}</span>
+                            <span>10^${exponent.toFixed(3)} = ${power.toFixed(6)} W</span>
                         </div>
                         <div class="flex items-center space-x-2 font-semibold">
                             <span class="font-mono">Result:</span>
-                            <span class="text-blue-900">V₂/V₁ = ${ratio.toFixed(6)}</span>
+                            <span class="text-blue-900">Power = ${power.toFixed(6)} W</span>
                         </div>
                     </div>
                 </div>
             `;
         } else {
-            // Show ratio to dB calculation
-            const ratio = Number(value);
-            const db = result;
-            const logValue = Math.log10(ratio);
+            // Show power to dBm calculation
+            const power = Number(value);
+            const dbm = result;
+            const logValue = Math.log10(power);
             
             mathContent.innerHTML = `
                 <div class="bg-green-50 rounded-lg p-4 border border-green-200">
-                    <p class="font-medium text-green-900 mb-2">Converting ${ratio} V₂/V₁ to dB:</p>
+                    <p class="font-medium text-green-900 mb-2">Converting ${power} W to dBm:</p>
                     <div class="space-y-2 text-green-800">
                         <div class="flex items-center space-x-2">
                             <span class="font-mono">Formula:</span>
-                            <code class="bg-green-100 px-2 py-1 rounded">dB = 20 × log₁₀(V₂/V₁)</code>
+                            <code class="bg-green-100 px-2 py-1 rounded">dBm = 10 × log₁₀(Power) + 30</code>
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="font-mono">Step 1:</span>
-                            <span>Calculate log₁₀(${ratio}) = ${logValue.toFixed(6)}</span>
+                            <span>Calculate log₁₀(${power}) = ${logValue.toFixed(6)}</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="font-mono">Step 2:</span>
-                            <span>20 × ${logValue.toFixed(6)} = ${db.toFixed(6)}</span>
+                            <span>10 × ${logValue.toFixed(6)} + 30 = ${dbm.toFixed(6)}</span>
                         </div>
                         <div class="flex items-center space-x-2 font-semibold">
                             <span class="font-mono">Result:</span>
-                            <span class="text-green-900">dB = ${db.toFixed(6)}</span>
+                            <span class="text-green-900">dBm = ${dbm.toFixed(6)}</span>
                         </div>
                     </div>
                 </div>
@@ -111,48 +111,48 @@ document.addEventListener('DOMContentLoaded', function() {
         mathExplanation.classList.add('hidden');
     }
 
-    function handleDbChange(value) {
-        dbValue = value;
-        lastModified = 'db';
+    function handleDbmChange(value) {
+        dbmValue = value;
+        lastModified = 'dbm';
 
         if (value === '' || isNaN(Number(value))) {
-            voltageRatio = '';
-            voltageInput.value = '';
-            copyVoltageBtn.classList.add('hidden');
+            powerValue = '';
+            powerInput.value = '';
+            copyPowerBtn.classList.add('hidden');
             updateClearButton();
             hideMathExplanation();
             return;
         }
 
-        const db = Number(value);
-        const ratio = dbToVoltageRatio(db);
-        voltageRatio = ratio.toFixed(6);
-        voltageInput.value = voltageRatio;
-        copyVoltageBtn.classList.remove('hidden');
+        const dbm = Number(value);
+        const power = dbmToPower(dbm);
+        powerValue = power.toFixed(6);
+        powerInput.value = powerValue;
+        copyPowerBtn.classList.remove('hidden');
         updateClearButton();
-        showMathExplanation(true, value, ratio);
+        showMathExplanation(true, value, power);
     }
 
-    function handleVoltageChange(value) {
-        voltageRatio = value;
-        lastModified = 'voltage';
+    function handlePowerChange(value) {
+        powerValue = value;
+        lastModified = 'power';
 
         if (value === '' || isNaN(Number(value)) || Number(value) <= 0) {
-            dbValue = '';
-            dbInput.value = '';
-            copyDbBtn.classList.add('hidden');
+            dbmValue = '';
+            dbmInput.value = '';
+            copyDbmBtn.classList.add('hidden');
             updateClearButton();
             hideMathExplanation();
             return;
         }
 
-        const ratio = Number(value);
-        const db = voltageRatioToDb(ratio);
-        dbValue = db.toFixed(6);
-        dbInput.value = dbValue;
-        copyDbBtn.classList.remove('hidden');
+        const power = Number(value);
+        const dbm = powerToDbm(power);
+        dbmValue = dbm.toFixed(6);
+        dbmInput.value = dbmValue;
+        copyDbmBtn.classList.remove('hidden');
         updateClearButton();
-        showMathExplanation(false, value, db);
+        showMathExplanation(false, value, dbm);
     }
 
     async function copyToClipboard(value, type) {
@@ -173,19 +173,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function clearAll() {
-        dbValue = '';
-        voltageRatio = '';
+        dbmValue = '';
+        powerValue = '';
         lastModified = null;
-        dbInput.value = '';
-        voltageInput.value = '';
-        copyDbBtn.classList.add('hidden');
-        copyVoltageBtn.classList.add('hidden');
+        dbmInput.value = '';
+        powerInput.value = '';
+        copyDbmBtn.classList.add('hidden');
+        copyPowerBtn.classList.add('hidden');
         updateClearButton();
         hideMathExplanation();
     }
 
     function updateClearButton() {
-        if (dbValue || voltageRatio) {
+        if (dbmValue || powerValue) {
             clearBtn.classList.remove('hidden');
         } else {
             clearBtn.classList.add('hidden');
@@ -193,30 +193,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listeners
-    dbInput.addEventListener('input', (e) => {
-        handleDbChange(e.target.value);
+    dbmInput.addEventListener('input', (e) => {
+        handleDbmChange(e.target.value);
         if (e.target.value) {
-            copyDbBtn.classList.remove('hidden');
+            copyDbmBtn.classList.remove('hidden');
         } else {
-            copyDbBtn.classList.add('hidden');
+            copyDbmBtn.classList.add('hidden');
         }
     });
 
-    voltageInput.addEventListener('input', (e) => {
-        handleVoltageChange(e.target.value);
+    powerInput.addEventListener('input', (e) => {
+        handlePowerChange(e.target.value);
         if (e.target.value) {
-            copyVoltageBtn.classList.remove('hidden');
+            copyPowerBtn.classList.remove('hidden');
         } else {
-            copyVoltageBtn.classList.add('hidden');
+            copyPowerBtn.classList.add('hidden');
         }
     });
 
-    copyDbBtn.addEventListener('click', () => {
-        copyToClipboard(dbValue, 'dB value');
+    copyDbmBtn.addEventListener('click', () => {
+        copyToClipboard(dbmValue, 'dBm value');
     });
 
-    copyVoltageBtn.addEventListener('click', () => {
-        copyToClipboard(voltageRatio, 'Voltage ratio');
+    copyPowerBtn.addEventListener('click', () => {
+        copyToClipboard(powerValue, 'Watt value');
     });
 
     clearBtn.addEventListener('click', clearAll);

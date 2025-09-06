@@ -3,66 +3,66 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Keyboard, T
 import { registerRootComponent } from 'expo';
 
 export default function App() {
-  const [dbValue, setDbValue] = useState('');
-  const [voltageValue, setVoltageValue] = useState('');
+  const [dbmValue, setDbmValue] = useState('');
+  const [powerValue, setPowerValue] = useState('');
   const [lastModified, setLastModified] = useState(null);
   const [mathExplanation, setMathExplanation] = useState('');
 
-  const handleDbChange = (value) => {
-    setDbValue(value);
-    setLastModified('db');
+  const handleDbmChange = (value) => {
+    setDbmValue(value);
+    setLastModified('dbm');
 
     if (value === '' || isNaN(Number(value))) {
-      setVoltageValue('');
+      setPowerValue('');
       setMathExplanation('');
       return;
     }
 
-    const db = Number(value);
-    const ratio = Math.pow(10, db / 20);
-    const voltageRatio = ratio.toFixed(6);
-    setVoltageValue(voltageRatio);
-    showMathExplanation(true, value, ratio);
+    const dbm = Number(value);
+    const power = Math.pow(10, (dbm - 30) / 10);
+    const powerResult = power.toFixed(6);
+    setPowerValue(powerResult);
+    showMathExplanation(true, value, power);
   };
 
-  const handleVoltageChange = (value) => {
-    setVoltageValue(value);
-    setLastModified('voltage');
+  const handlePowerChange = (value) => {
+    setPowerValue(value);
+    setLastModified('power');
 
     if (value === '' || isNaN(Number(value)) || Number(value) <= 0) {
-      setDbValue('');
+      setDbmValue('');
       setMathExplanation('');
       return;
     }
 
-    const ratio = Number(value);
-    const db = 20 * Math.log10(ratio);
-    const dbResult = db.toFixed(6);
-    setDbValue(dbResult);
-    showMathExplanation(false, value, db);
+    const power = Number(value);
+    const dbm = 10 * Math.log10(power) + 30;
+    const dbmResult = dbm.toFixed(6);
+    setDbmValue(dbmResult);
+    showMathExplanation(false, value, dbm);
   };
 
-  const showMathExplanation = (fromDb, value, result) => {
-    if (fromDb) {
-      const db = Number(value);
-      const ratio = result;
-      const exponent = db / 20;
+  const showMathExplanation = (fromDbm, value, result) => {
+    if (fromDbm) {
+      const dbm = Number(value);
+      const power = result;
+      const exponent = (dbm - 30) / 10;
       
-      const explanation = `Converting ${db} dB to Voltage Ratio:\n\nFormula: V₂/V₁ = 10^(dB/20)\nStep 1: Calculate exponent: ${db} ÷ 20 = ${exponent.toFixed(3)}\nStep 2: 10^${exponent.toFixed(3)} = ${ratio.toFixed(6)}\n\nResult: V₂/V₁ = ${ratio.toFixed(6)}`;
+      const explanation = `Converting ${dbm} dBm to Watt:\n\nFormula: Power (W) = 10^((dBm - 30) / 10)\nStep 1: Calculate exponent: (${dbm} - 30) ÷ 10 = ${exponent.toFixed(3)}\nStep 2: 10^${exponent.toFixed(3)} = ${power.toFixed(6)} W\n\nResult: Power = ${power.toFixed(6)} W`;
       setMathExplanation(explanation);
     } else {
-      const ratio = Number(value);
-      const db = result;
-      const logValue = Math.log10(ratio);
+      const power = Number(value);
+      const dbm = result;
+      const logValue = Math.log10(power);
       
-      const explanation = `Converting ${ratio} V₂/V₁ to dB:\n\nFormula: dB = 20 × log₁₀(V₂/V₁)\nStep 1: Calculate log₁₀(${ratio}) = ${logValue.toFixed(6)}\nStep 2: 20 × ${logValue.toFixed(6)} = ${db.toFixed(6)}\n\nResult: dB = ${db.toFixed(6)}`;
+      const explanation = `Converting ${power} W to dBm:\n\nFormula: dBm = 10 × log₁₀(Power) + 30\nStep 1: Calculate log₁₀(${power}) = ${logValue.toFixed(6)}\nStep 2: 10 × ${logValue.toFixed(6)} + 30 = ${dbm.toFixed(6)}\n\nResult: dBm = ${dbm.toFixed(6)}`;
       setMathExplanation(explanation);
     }
   };
 
   const clearAll = () => {
-    setDbValue('');
-    setVoltageValue('');
+    setDbmValue('');
+    setPowerValue('');
     setLastModified(null);
     setMathExplanation('');
     Keyboard.dismiss();
@@ -77,19 +77,19 @@ export default function App() {
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>dB ⇄ Voltage Converter</Text>
+          <Text style={styles.title}>dBm ⇄ Watt Converter</Text>
         </View>
         
         {/* Main Converter Card */}
         <View style={styles.card}>
-          {/* Decibels Input */}
+          {/* dBm Input */}
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Decibels (dB)</Text>
+            <Text style={styles.label}>dBm</Text>
             <TextInput
               style={styles.input}
-              value={dbValue}
-              onChangeText={handleDbChange}
-              placeholder="Enter dB value..."
+              value={dbmValue}
+              onChangeText={handleDbmChange}
+              placeholder="Enter dBm value..."
               keyboardType="numeric"
               returnKeyType="done"
               onSubmitEditing={dismissKeyboard}
@@ -101,14 +101,14 @@ export default function App() {
             <Text style={styles.arrowIcon}>⇅</Text>
           </View>
 
-          {/* Voltage Ratio Input */}
+          {/* Power Input */}
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Voltage Ratio (V₂/V₁)</Text>
+            <Text style={styles.label}>Watt (W)</Text>
             <TextInput
               style={styles.input}
-              value={voltageValue}
-              onChangeText={handleVoltageChange}
-              placeholder="Enter voltage ratio..."
+              value={powerValue}
+              onChangeText={handlePowerChange}
+              placeholder="Enter watt value..."
               keyboardType="numeric"
               returnKeyType="done"
               onSubmitEditing={dismissKeyboard}
@@ -116,7 +116,7 @@ export default function App() {
           </View>
 
           {/* Clear Button */}
-          {(dbValue || voltageValue) ? (
+          {(dbmValue || powerValue) ? (
             <TouchableOpacity style={styles.clearButton} onPress={clearAll}>
               <Text style={styles.clearButtonText}>Clear All</Text>
             </TouchableOpacity>
