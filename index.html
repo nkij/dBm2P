@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dB ⇄ Voltage Converter</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="dB Converter">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+        .focus-ring:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #3b82f6;
+            border-color: transparent;
+        }
+        .transition-all {
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-500 rounded-full mb-4 shadow-lg">
+                <i data-lucide="calculator" class="w-8 h-8 text-white"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">dB ⇄ Voltage Converter</h1>
+        </div>
+
+        <!-- Main Converter Card -->
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+            <div class="p-6 space-y-6">
+                <!-- Decibels Input -->
+                <div class="space-y-2">
+                    <label for="db-input" class="block text-sm font-semibold text-gray-700">
+                        Decibels (dB)
+                    </label>
+                    <div class="relative">
+                        <input
+                            id="db-input"
+                            type="number"
+                            placeholder="Enter dB value..."
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus-ring transition-all duration-200 text-lg font-mono"
+                        />
+                        <button
+                            id="copy-db-btn"
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-blue-500 transition-colors duration-200 hidden"
+                        >
+                            <i data-lucide="copy" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Conversion Indicator -->
+                <div class="flex justify-center">
+                    <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full">
+                        <i data-lucide="arrow-up-down" class="w-6 h-6 text-gray-500"></i>
+                    </div>
+                </div>
+
+                <!-- Voltage Ratio Input -->
+                <div class="space-y-2">
+                    <label for="voltage-input" class="block text-sm font-semibold text-gray-700">
+                        Voltage Ratio (V₂/V₁)
+                    </label>
+                    <div class="relative">
+                        <input
+                            id="voltage-input"
+                            type="number"
+                            placeholder="Enter voltage ratio..."
+                            min="0"
+                            step="any"
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus-ring transition-all duration-200 text-lg font-mono"
+                        />
+                        <button
+                            id="copy-voltage-btn"
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-blue-500 transition-colors duration-200 hidden"
+                        >
+                            <i data-lucide="copy" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Clear Button -->
+                <button
+                    id="clear-btn"
+                    class="w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition-colors duration-200 font-medium hidden"
+                >
+                    Clear All
+                </button>
+            </div>
+
+            <!-- Copy Feedback -->
+            <div id="copy-feedback" class="px-6 pb-4 hidden">
+                <div class="bg-green-50 border border-green-200 rounded-xl px-4 py-2 text-center">
+                    <p class="text-sm text-green-600 font-medium" id="feedback-text"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Math Explanation Box -->
+        <div id="math-explanation" class="mt-6 bg-white rounded-xl shadow-md border border-gray-200 p-6 hidden">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <i data-lucide="calculator" class="w-5 h-5 mr-2 text-blue-500"></i>
+                Calculation Steps
+            </h3>
+            <div id="math-content" class="space-y-3 text-sm">
+                <!-- Math content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

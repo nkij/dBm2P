@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+</head>
+<body>
+    <h1>Icon Generator for dB Converter</h1>
+    <p>This will generate placeholder icons. For production, you should create proper icons.</p>
+    
+    <canvas id="canvas" width="512" height="512" style="border: 1px solid #ccc;"></canvas>
+    <br><br>
+    <button onclick="generateIcons()">Generate Icons</button>
+    <div id="downloads"></div>
+
+    <script>
+        function generateIcons() {
+            const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+            const downloads = document.getElementById('downloads');
+            downloads.innerHTML = '';
+            
+            sizes.forEach(size => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                
+                // Background
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillRect(0, 0, size, size);
+                
+                // Calculator icon (simplified)
+                ctx.fillStyle = 'white';
+                const iconSize = size * 0.6;
+                const x = (size - iconSize) / 2;
+                const y = (size - iconSize) / 2;
+                
+                // Draw a simple calculator shape
+                ctx.fillRect(x, y, iconSize, iconSize * 0.8);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillRect(x + iconSize * 0.1, y + iconSize * 0.1, iconSize * 0.8, iconSize * 0.2);
+                
+                // Add "dB" text
+                ctx.fillStyle = 'white';
+                ctx.font = `bold ${size * 0.15}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.fillText('dB', size / 2, size * 0.7);
+                
+                // Create download link
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `icon-${size}x${size}.png`;
+                    a.textContent = `Download ${size}x${size}`;
+                    a.style.display = 'block';
+                    a.style.margin = '5px 0';
+                    downloads.appendChild(a);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

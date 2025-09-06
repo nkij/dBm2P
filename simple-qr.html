@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple QR Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        #qrcode { margin: 20px; }
+        input { padding: 10px; width: 300px; margin: 10px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>dB Converter QR Code</h1>
+    <input type="text" id="url" value="http://192.168.68.103:8000" placeholder="Enter URL">
+    <br>
+    <button onclick="generateQR()">Generate QR Code</button>
+    <div id="qrcode"></div>
+
+    <script>
+        function generateQR() {
+            const url = document.getElementById('url').value;
+            document.getElementById('qrcode').innerHTML = '';
+            
+            QRCode.toCanvas(document.getElementById('qrcode'), url, {
+                width: 300,
+                height: 300
+            }, function (error) {
+                if (error) console.error(error);
+                else console.log('QR code generated!');
+            });
+        }
+        
+        // Generate on page load
+        window.onload = generateQR;
+    </script>
+</body>
+</html>

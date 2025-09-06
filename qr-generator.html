@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator for dB Converter</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .qr-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        #qrcode {
+            margin: 20px 0;
+        }
+        .instructions {
+            background: #f3f4f6;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .instructions h3 {
+            color: #374151;
+            margin-top: 0;
+        }
+        .instructions ol {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        .url-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .generate-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .generate-btn:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 QR Code Generator for dB Converter</h1>
+        
+        <div class="instructions">
+            <h3>How to use:</h3>
+            <ol>
+                <li>Enter your app's URL below (or use the default local server)</li>
+                <li>Click "Generate QR Code"</li>
+                <li>Scan the QR code with your phone's camera</li>
+                <li>Your dB Converter app will open in the browser!</li>
+            </ol>
+        </div>
+
+        <div class="qr-section">
+            <input type="text" id="urlInput" class="url-input" 
+                   placeholder="Enter your app URL here..." 
+                   value="http://localhost:8000">
+            <br>
+            <button onclick="generateQR()" class="generate-btn">Generate QR Code</button>
+            
+            <div id="qrcode"></div>
+            
+            <p><strong>Current URL:</strong> <span id="currentUrl">http://localhost:8000</span></p>
+        </div>
+
+        <div class="instructions">
+            <h3>Alternative Methods:</h3>
+            <ol>
+                <li><strong>PWA Installation:</strong> Open the URL in Chrome/Safari and look for "Add to Home Screen"</li>
+                <li><strong>Direct Link:</strong> Share the URL directly with others</li>
+                <li><strong>Local Network:</strong> Use your computer's IP address instead of localhost</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function generateQR() {
+            const url = document.getElementById('urlInput').value || 'http://localhost:8000';
+            document.getElementById('currentUrl').textContent = url;
+            
+            // Clear previous QR code
+            document.getElementById('qrcode').innerHTML = '';
+            
+            // Generate new QR code
+            QRCode.toCanvas(document.getElementById('qrcode'), url, {
+                width: 300,
+                height: 300,
+                color: {
+                    dark: '#1f2937',
+                    light: '#ffffff'
+                }
+            }, function (error) {
+                if (error) {
+                    console.error(error);
+                    document.getElementById('qrcode').innerHTML = '<p style="color: red;">Error generating QR code</p>';
+                } else {
+                    console.log('QR code generated successfully!');
+                }
+            });
+        }
+
+        // Generate QR code on page load
+        window.onload = function() {
+            generateQR();
+        };
+    </script>
+</body>
+</html>

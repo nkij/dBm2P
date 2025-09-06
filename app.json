@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "dBVoltageConverter",
+    "slug": "db-voltage-converter",
+    "version": "1.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon_with_frame.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/icon_with_frame.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f9fafb"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.antimatterwebcomics.dbvoltageconverter",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon_with_frame.png",
+        "backgroundColor": "#f9fafb"
+      },
+      "package": "com.antimatterwebcomics.dbvoltageconverter"
+    },
+    "plugins": [],
+    "extra": {
+      "eas": {
+        "projectId": "6e098ade-1496-462e-ba19-c246f2850985"
+      }
+    }
+  }
+}

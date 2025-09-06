@@ -1,0 +1,3 @@
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:03D7B68C-69DF-47FA-ACB9-1A5533E43B7A, OS:18.6, name:iPad Pro 13-inch (M4) }
+{ platform:iOS Simulator, arch:x86_64, id:03D7B68C-69DF-47FA-ACB9-1A5533E43B7A, OS:18.6, name:iPad Pro 13-inch (M4) }

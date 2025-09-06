@@ -1,0 +1,42 @@
+{
+  "name": "db-voltage-converter",
+  "version": "1.0.0",
+  "description": "Convert between decibels and voltage ratios with step-by-step math explanations",
+  "main": "App.js",
+  "scripts": {
+    "build": "echo 'Build complete'",
+    "serve": "python3 -m http.server 8000",
+    "cap:sync": "npx cap sync",
+    "cap:ios": "npx cap open ios",
+    "cap:android": "npx cap open android",
+    "expo:start": "npx expo start",
+    "expo:web": "npx expo start --web",
+    "expo:ios": "npx expo start --ios",
+    "expo:android": "npx expo start --android",
+    "expo:build": "npx expo build",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
+  },
+  "keywords": [
+    "decibel",
+    "voltage",
+    "converter",
+    "audio",
+    "electronics",
+    "calculator"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "@expo/cli": "^0.24.20",
+    "expo": "^53.0.22"
+  },
+  "dependencies": {
+    "expo-build-properties": "~0.14.8",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-native": "0.79.5",
+    "react-native-web": "^0.20.0",
+    "expo": "~53.0.22"
+  }
+}
