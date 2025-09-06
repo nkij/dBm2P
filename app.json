@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "dBVoltageConverter",
-    "slug": "db-voltage-converter",
+    "name": "dBm to Watt Converter",
+    "slug": "dbm-power-converter",
     "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon_with_frame.png",
@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.antimatterwebcomics.dbvoltageconverter",
+      "bundleIdentifier": "com.antimatterwebcomics.dbmwattconverter",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -26,7 +26,7 @@
         "foregroundImage": "./assets/icon_with_frame.png",
         "backgroundColor": "#f9fafb"
       },
-      "package": "com.antimatterwebcomics.dbvoltageconverter"
+      "package": "com.antimatterwebcomics.dbmwattconverter"
     },
     "plugins": [],
     "extra": {
